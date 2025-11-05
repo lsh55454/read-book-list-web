@@ -1,0 +1,17 @@
+{
+  "books": [
+    {
+      "title": "지구 끝의 온실",
+      "author": "김초엽 (지은이)",
+      "isbn": "9791191824001",
+      "cover": "https://image.aladin.co.kr/product/27692/63/coversum/s222930473_1.jpg",
+      "publisher": "자이언트북스",
+      "pubDate": "2021-08-18",
+      "description": "김초엽 첫 장편소설. 『우리가 빛의 속도로 갈 수 없다면』을 통해 이미 폭넓은 독자층을 형성하며 열렬한 사랑을 받고 있는 김초엽 작가는 더스트로 멸망한 이후의 세계를 첫 장편소설의 무대로 삼았다.",
+      "totalPages": 0,
+      "status": "completed",
+      "addedDate": "2025-10-29T08:20:34.514Z",
+      "completedDate": "2025-10-29T08:20:39.875Z"
+    }
+  ]
+}
