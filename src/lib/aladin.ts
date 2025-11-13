@@ -7,6 +7,7 @@ export interface AladinBook {
   publisher: string;
   pubDate: string;
   description: string;
+  itemPage: number;
 }
 
 // Function to search books using Aladin API through our API route
@@ -34,9 +35,38 @@ export async function searchBooks(query: string): Promise<AladinBook[]> {
       isbn: item.isbn13 || item.isbn,
       cover: item.cover,
       publisher: item.publisher,
-      pubDate: item.pubdate,
+      pubDate: item.pubDate,
       description: item.description,
       //totalPages: item.subInfo?.itemPage || 0
+    }));
+  } catch (error) {
+    console.error('Error searching books:', error);
+    return [];
+  }
+}
+
+// Function to search books using Aladin API through our API route
+export async function getPages(query: string): Promise<AladinBook[]> {
+  try {
+    console.log('Getting pages for:', query);
+    const response = await fetch(`/api/pages?query=${encodeURIComponent(query)}`);
+    // pages/route.ts에 액세스해서 api를 호출하도록 함.
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json(); // return값
+    console.log('Search response:', data);
+    
+    if (!data.item || !Array.isArray(data.item)) {
+      console.error('Unexpected API response format:', data);
+      return [];
+    }
+    
+    return data.item.map((item: any) => ({
+      isbn: item.isbn13, // only gets isbn13 in pages/route.ts
+      itemPage: item.subInfo.itemPage || 0 // 0이어도 되냐..?
     }));
   } catch (error) {
     console.error('Error searching books:', error);

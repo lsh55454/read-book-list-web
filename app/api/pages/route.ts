@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
   }
   if (query.length !== 13) {
+    console.error('Only ISBN-13 is supported:', query);
     return NextResponse.json({ error: 'This endpoint only supports ISBN-13 lookups' }, { status: 401 });
   }
 

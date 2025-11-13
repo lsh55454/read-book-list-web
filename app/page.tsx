@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { searchBooks, type AladinBook, type SavedBook, saveBook, getSavedBooks } from '@/lib/aladin';
+import { searchBooks, getPages, type AladinBook, type SavedBook, saveBook, getSavedBooks } from '@/lib/aladin';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,7 +23,17 @@ export default function Home() {
     console.log('Searching for:', searchQuery);
     try {
       const results = await searchBooks(searchQuery);
-      console.log('Search results:', results);
+      console.log('Search results:', results); // searchBooks의 결과 => results
+
+      const resultsIsbns = results.map(r => r.isbn); // isbn 배열 생성
+      const promises = resultsIsbns.map(isbn => getPages(isbn)); // 각 isbn에 대해 getPages 호출
+      const pagesResults = await Promise.all(promises);
+      console.log('Pages results:', pagesResults);
+      
+      results.forEach((book, index) => {
+        book.itemPage = pagesResults[index][0]?.itemPage || 0; // 각 책에 페이지 정보 추가
+      });
+      
       setSearchResults(results);
     } catch (error) {
       console.error('Search error:', error);
@@ -97,6 +107,7 @@ export default function Home() {
                       <h3 className="font-bold text-lg">{book.title}</h3>
                       <p className="text-sm text-gray-600 mt-1">{book.author}</p>
                       <p className="text-sm text-gray-500 mt-1">{book.publisher} ({book.pubDate})</p>
+                      <p className="text-sm text-gray-500 mt-1">{book.itemPage}페이지</p>
                       <button
                         onClick={() => handleSaveBook(book)}
                         className="mt-3 px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600"
