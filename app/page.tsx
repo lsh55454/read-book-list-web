@@ -46,9 +46,22 @@ export default function Home() {
       status: 'completed',
       addedDate: new Date().toISOString(),
       currentPage: 0,
-      totalPages: 0
+      totalPages: book.itemPage || 0
     };
     await saveBook(newBook);
+    const updatedBooks = await getSavedBooks();
+    setSavedBooks(updatedBooks);
+  };
+
+  const handleDeleteBook = async (book: AladinBook) => {
+    const postingDeleteBook: SavedBook = {
+      ...book,
+      title: "",
+      status: 'completed',
+      currentPage: 0,
+      totalPages: 0,
+    };
+    await saveBook(postingDeleteBook); // title이 빈 책을 저장하여 삭제 트리거
     const updatedBooks = await getSavedBooks();
     setSavedBooks(updatedBooks);
   };
@@ -136,7 +149,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="bg-white p-4 rounded-lg shadow-sm">
-                <p className="text-sm text-gray-900">총 페이지 수</p>
+                <p className="text-sm text-gray-900">총 읽은 페이지 수</p>
                 <p className="text-2xl font-bold mt-1 text-gray-900">
                   {savedBooks
                     .filter(b => b.status === 'completed')
@@ -165,6 +178,12 @@ export default function Home() {
                       }`}
                     >
                       {book.status === 'completed' ? '✓ 읽음' : '읽고 싶은 책'}
+                    </button>
+                    <button
+                      onClick={() => handleDeleteBook(book)}
+                      className="ml-2 text-sm px-3 py-1 bg-red-100 text-red-500 rounded hover:bg-red-300"
+                      >
+                      삭제
                     </button>
                   </div>
                 </div>

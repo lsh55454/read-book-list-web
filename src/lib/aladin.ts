@@ -101,12 +101,13 @@ export async function getSavedBooks(): Promise<SavedBook[]> {
 
 export async function saveBook(book: SavedBook): Promise<void> {
   try {
+    console.log('Saving book:', book);
     const response = await fetch('/api/books', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(book),
+      body: JSON.stringify(book), // if wanting to delete the book, book should be empty object.
     });
     
     if (!response.ok) {

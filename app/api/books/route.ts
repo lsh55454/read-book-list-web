@@ -44,7 +44,9 @@ export async function POST(request: Request) {
     
     const existingIndex = books.findIndex((b: any) => b.isbn === book.isbn);
     if (existingIndex >= 0) {
-      books[existingIndex] = book;
+      if (book.title === "")   books.splice(existingIndex, 1);
+      else                     books[existingIndex] = book;
+      // if wanting to delete the book, title is empty.
     } else {
       books.push(book);
     }
