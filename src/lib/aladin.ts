@@ -3,11 +3,19 @@ export interface AladinBook {
   title: string;
   author: string;
   isbn: string;
+  isbn13: string;
   cover: string;
   publisher: string;
   pubDate: string;
   description: string;
   itemPage: number;
+}
+
+export interface AladinBookInfoDetail {
+  isbn13: string;
+  subInfo: {
+    itemPage: number;
+  };
 }
 
 // Function to search books using Aladin API through our API route
@@ -29,10 +37,10 @@ export async function searchBooks(query: string): Promise<AladinBook[]> {
       return [];
     }
     
-    return data.item.map((item: any) => ({
+    return data.item.map((item: AladinBook) => ({
       title: item.title,
       author: item.author,
-      isbn: item.isbn13 || item.isbn,
+      isbn: item.isbn13,
       cover: item.cover,
       publisher: item.publisher,
       pubDate: item.pubDate,
@@ -64,8 +72,8 @@ export async function getPages(query: string): Promise<AladinBook[]> {
       return [];
     }
     
-    return data.item.map((item: any) => ({
-      isbn: item.isbn13, // only gets isbn13 in pages/route.ts
+    return data.item.map((item: AladinBookInfoDetail) => ({
+      isbn13: item.isbn13, // only gets isbn13 in pages/route.ts
       itemPage: item.subInfo.itemPage || 0 // 0이어도 되냐..?
     }));
   } catch (error) {

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
+import { type SavedBook } from '@/lib/aladin';
 import path from 'path';
 
 const DATA_DIR = path.join(process.cwd(), 'src', 'data');
@@ -41,8 +42,8 @@ export async function POST(request: Request) {
     const content = await fs.readFile(BOOKS_FILE, 'utf-8');
     const data = JSON.parse(content);
     const books = data.books || [];
-    
-    const existingIndex = books.findIndex((b: any) => b.isbn === book.isbn);
+
+    const existingIndex = books.findIndex((b: SavedBook) => b.isbn === book.isbn);
     if (existingIndex >= 0) {
       if (book.title === "")   books.splice(existingIndex, 1);
       else                     books[existingIndex] = book;
