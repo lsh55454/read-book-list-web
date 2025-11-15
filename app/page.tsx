@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { searchBooks, getPages, type AladinBook, type SavedBook, saveBook, getSavedBooks } from '@/lib/aladin';
+import Link from 'next/link';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -93,11 +94,11 @@ export default function Home() {
       <header className="bg-white shadow-sm">
         <div className="flex max-w-7xl mx-auto px-4 py-4">
           {/*홈으로 돌아가기*/}
-          <a href="/" className="flex items-center">
+          <Link href="/" className="flex items-center">
           {/*logo and title*/}
           <img src="favicon.ico" alt="Logo" className="h-8 mb-2" />
           <h1 className="text-2xl font-bold text-gray-900">&nbsp;&nbsp;나의 독서 기록</h1>
-          </a>
+          </Link>
         </div>
       </header>
 
