@@ -112,8 +112,8 @@ export default function Home() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="책 제목을 입력하세요..."
-                className="flex-1 p-2 border rounded text-gray-900"
+                placeholder="입력..."
+                className="flex-1 p-2 border rounded text-gray-900 overflow-y-scroll"
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               />
               <button
@@ -162,8 +162,8 @@ export default function Home() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="책 제목을 입력하세요..."
-                className="flex-1 p-2 border rounded text-gray-900"
+                placeholder="입력..."
+                className="flex-1 p-2 border rounded text-gray-900 overflow-y-scroll"
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 ref={searchInputRef}
               />
