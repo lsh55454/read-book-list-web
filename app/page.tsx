@@ -277,10 +277,10 @@ export default function Home() {
             className="
               md:hidden
               fixed z-20 bottom-10 right-6
-              bg-blue-500 text-white ${/* 3. 버튼 색상 */''}
+              bg-blue-500 text-white
               w-22 h-10 rounded-full
-              flex items-center justify-center ${/* 5. 아이콘 중앙 정렬 */''}
-              shadow-lg ${/* 6. 떠있는 그림자 효과 */''}
+              flex items-center justify-center
+              shadow-lg
             "
             aria-label="검색 닫기"
           >

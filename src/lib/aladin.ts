@@ -18,6 +18,11 @@ export interface AladinBookInfoDetail {
   };
 }
 
+export interface PageInfo {
+  isbn13: string;
+  itemPage: number;
+}
+
 // Function to search books using Aladin API through our API route
 export async function searchBooks(query: string): Promise<AladinBook[]> {
   try {
@@ -41,11 +46,12 @@ export async function searchBooks(query: string): Promise<AladinBook[]> {
       title: item.title,
       author: item.author,
       isbn: item.isbn13,
+      isbn13: item.isbn13,
       cover: item.cover,
       publisher: item.publisher,
       pubDate: item.pubDate,
       description: item.description,
-      //totalPages: item.subInfo?.itemPage || 0
+      itemPage: 0,
     }));
   } catch (error) {
     console.error('Error searching books:', error);
@@ -54,7 +60,7 @@ export async function searchBooks(query: string): Promise<AladinBook[]> {
 }
 
 // Function to search books using Aladin API through our API route
-export async function getPages(query: string): Promise<AladinBook[]> {
+export async function getPages(query: string): Promise<PageInfo[]> {
   try {
     console.log('Getting pages for:', query);
     const response = await fetch(`/api/pages?query=${encodeURIComponent(query)}`);
